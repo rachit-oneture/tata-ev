@@ -1,0 +1,868 @@
+{
+ "source": "the supplied logs (corpus_836.json); not confirmed by engineers",
+ "sample_count": 20,
+ "event_count": 836,
+ "codes": {
+  "00400A": [
+   {
+    "sample": "S18",
+    "attempt": 1,
+    "phase": "before_start",
+    "line": 16,
+    "error_code": "OtherError",
+    "status": "Faulted",
+    "asserted": true
+   }
+  ],
+  "00C109": [
+   {
+    "sample": "S18",
+    "attempt": 4,
+    "phase": "before_start",
+    "line": 44,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   }
+  ],
+  "00C202": [
+   {
+    "sample": "S12",
+    "attempt": 2,
+    "phase": "before_start",
+    "line": 19,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   },
+   {
+    "sample": "S12",
+    "attempt": 4,
+    "phase": "before_start",
+    "line": 29,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   }
+  ],
+  "00C310": [
+   {
+    "sample": "S18",
+    "attempt": 1,
+    "phase": "before_start",
+    "line": 17,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   }
+  ],
+  "00C316": [
+   {
+    "sample": "S12",
+    "attempt": 1,
+    "phase": "before_start",
+    "line": 11,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   },
+   {
+    "sample": "S18",
+    "attempt": 2,
+    "phase": "before_start",
+    "line": 26,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   },
+   {
+    "sample": "S18",
+    "attempt": 3,
+    "phase": "before_start",
+    "line": 35,
+    "error_code": "OtherError",
+    "status": "Available",
+    "asserted": true
+   }
+  ]
+ },
+ "vendor_reporting": {
+  "Delta Electronics": {
+   "asserted_with_error_code": 8,
+   "reported_without_error_code": 0
+  }
+ },
+ "chargers": {
+  "23R2130E0000851790": {
+   "samples": [
+    "S18"
+   ],
+   "vendor_ids": [
+    "Delta Electronics"
+   ],
+   "connectors": [
+    "0",
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 19,
+    "Faulted": 6,
+    "Preparing": 5
+   },
+   "status_error_count": 9
+  },
+  "23R2142E0000852155NEW": {
+   "samples": [
+    "S20"
+   ],
+   "vendor_ids": [
+    "Delta Electronics"
+   ],
+   "connectors": [
+    "1"
+   ],
+   "status_counts": {
+    "Available": 3,
+    "Preparing": 3
+   },
+   "status_error_count": 0
+  },
+  "23R2202E00C0850202": {
+   "samples": [
+    "S07"
+   ],
+   "vendor_ids": [
+    "Delta Electronics"
+   ],
+   "connectors": [
+    "0",
+    "1"
+   ],
+   "status_counts": {
+    "Available": 7,
+    "Preparing": 1,
+    "SuspendedEV": 1
+   },
+   "status_error_count": 0
+  },
+  "23R2220E00C0850700NEW": {
+   "samples": [
+    "S12"
+   ],
+   "vendor_ids": [
+    "Delta Electronics"
+   ],
+   "connectors": [
+    "0",
+    "1"
+   ],
+   "status_counts": {
+    "Available": 13,
+    "Preparing": 3
+   },
+   "status_error_count": 3
+  },
+  "23R2229E03A0850955": {
+   "samples": [
+    "S01"
+   ],
+   "vendor_ids": [
+    "Delta Electronics"
+   ],
+   "connectors": [
+    "0",
+    "1"
+   ],
+   "status_counts": {
+    "Available": 1,
+    "Finishing": 2,
+    "Preparing": 1,
+    "SuspendedEV": 1
+   },
+   "status_error_count": 0
+  },
+  "D12010310600004": {
+   "samples": [
+    "S06",
+    "S09"
+   ],
+   "vendor_ids": [
+    "Exicom"
+   ],
+   "connectors": [
+    "0",
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 54,
+    "Charging": 12,
+    "Faulted": 8,
+    "Finishing": 15,
+    "Preparing": 17
+   },
+   "status_error_count": 10
+  },
+  "D22110360720011": {
+   "samples": [
+    "S03"
+   ],
+   "vendor_ids": [
+    "Exicom",
+    "null"
+   ],
+   "connectors": [
+    "0",
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 2,
+    "Faulted": 2,
+    "Finishing": 1,
+    "Preparing": 1
+   },
+   "status_error_count": 3
+  },
+  "MINE250100843": {
+   "samples": [
+    "S13"
+   ],
+   "vendor_ids": [
+    "mindra"
+   ],
+   "connectors": [
+    "2"
+   ],
+   "status_counts": {
+    "Available": 1
+   },
+   "status_error_count": 0
+  },
+  "MINE2507004213": {
+   "samples": [
+    "S16"
+   ],
+   "vendor_ids": [
+    "mindra"
+   ],
+   "connectors": [
+    "0",
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 4,
+    "Charging": 5,
+    "Faulted": 4,
+    "Finishing": 4,
+    "Preparing": 4
+   },
+   "status_error_count": 7
+  },
+  "SI07202689": {
+   "samples": [
+    "S08"
+   ],
+   "vendor_ids": [
+    "SIEMENS"
+   ],
+   "connectors": [
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 1,
+    "Charging": 1,
+    "Finishing": 1,
+    "Preparing": 1
+   },
+   "status_error_count": 0
+  },
+  "SI12202528": {
+   "samples": [
+    "S02"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "0",
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 15,
+    "Charging": 4,
+    "Faulted": 6,
+    "Finishing": 8,
+    "Preparing": 11
+   },
+   "status_error_count": 18
+  },
+  "TPDC165692": {
+   "samples": [
+    "S19"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "0",
+    "1",
+    "2"
+   ],
+   "status_counts": {
+    "Available": 3,
+    "Faulted": 2,
+    "Preparing": 3,
+    "SuspendedEVSE": 1
+   },
+   "status_error_count": 3
+  },
+  "TPDC20211019016NEW": {
+   "samples": [
+    "S15"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "0",
+    "1"
+   ],
+   "status_counts": {
+    "Available": 12,
+    "Charging": 10,
+    "Faulted": 5,
+    "Preparing": 5
+   },
+   "status_error_count": 5
+  },
+  "TPDC20211160037": {
+   "samples": [
+    "S20"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "1"
+   ],
+   "status_counts": {
+    "Available": 3,
+    "Preparing": 2
+   },
+   "status_error_count": 0
+  },
+  "TPDC20211260270": {
+   "samples": [
+    "S14"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "1"
+   ],
+   "status_counts": {
+    "Available": 4,
+    "Preparing": 3,
+    "SuspendedEVSE": 1
+   },
+   "status_error_count": 1
+  },
+  "TPDC20220260648": {
+   "samples": [
+    "S10"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "0",
+    "1"
+   ],
+   "status_counts": {
+    "Available": 9,
+    "Faulted": 7,
+    "Finishing": 3,
+    "Preparing": 8,
+    "SuspendedEVSE": 3
+   },
+   "status_error_count": 10
+  },
+  "TPDC20220260681": {
+   "samples": [
+    "S11"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "1"
+   ],
+   "status_counts": {
+    "Preparing": 1,
+    "SuspendedEVSE": 1
+   },
+   "status_error_count": 1
+  },
+  "TPDC20220260866": {
+   "samples": [
+    "S04"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "2"
+   ],
+   "status_counts": {
+    "Available": 3,
+    "Charging": 2,
+    "Finishing": 2,
+    "Preparing": 2
+   },
+   "status_error_count": 0
+  },
+  "TPDC20220661105": {
+   "samples": [
+    "S17"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "1"
+   ],
+   "status_counts": {
+    "Available": 10,
+    "Preparing": 10,
+    "SuspendedEVSE": 8
+   },
+   "status_error_count": 8
+  },
+  "TPDC20220761225": {
+   "samples": [
+    "S05"
+   ],
+   "vendor_ids": [
+    "null"
+   ],
+   "connectors": [
+    "0",
+    "1"
+   ],
+   "status_counts": {
+    "Available": 2,
+    "Preparing": 1,
+    "SuspendedEVSE": 1
+   },
+   "status_error_count": 1
+  }
+ },
+ "vendors": {
+  "Delta Electronics": {
+   "samples": [
+    "S01",
+    "S07",
+    "S12",
+    "S18",
+    "S20"
+   ],
+   "chargers": [
+    "23R2130E0000851790",
+    "23R2142E0000852155NEW",
+    "23R2202E00C0850202",
+    "23R2220E00C0850700NEW",
+    "23R2229E03A0850955"
+   ]
+  },
+  "Exicom": {
+   "samples": [
+    "S03",
+    "S06",
+    "S09"
+   ],
+   "chargers": [
+    "D12010310600004",
+    "D22110360720011"
+   ]
+  },
+  "SIEMENS": {
+   "samples": [
+    "S08"
+   ],
+   "chargers": [
+    "SI07202689"
+   ]
+  },
+  "mindra": {
+   "samples": [
+    "S13",
+    "S16"
+   ],
+   "chargers": [
+    "MINE250100843",
+    "MINE2507004213"
+   ]
+  },
+  "null": {
+   "samples": [
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S10",
+    "S11",
+    "S14",
+    "S15",
+    "S17",
+    "S19",
+    "S20"
+   ],
+   "chargers": [
+    "D22110360720011",
+    "SI12202528",
+    "TPDC165692",
+    "TPDC20211019016NEW",
+    "TPDC20211160037",
+    "TPDC20211260270",
+    "TPDC20220260648",
+    "TPDC20220260681",
+    "TPDC20220260866",
+    "TPDC20220661105",
+    "TPDC20220761225"
+   ]
+  }
+ },
+ "vendor_statuses": {
+  "Delta Electronics": {
+   "Available": {
+    "occurrences": 43,
+    "chargers": [
+     "23R2130E0000851790",
+     "23R2142E0000852155NEW",
+     "23R2202E00C0850202",
+     "23R2220E00C0850700NEW",
+     "23R2229E03A0850955"
+    ],
+    "samples": [
+     "S01",
+     "S07",
+     "S12",
+     "S18",
+     "S20"
+    ]
+   },
+   "Faulted": {
+    "occurrences": 6,
+    "chargers": [
+     "23R2130E0000851790"
+    ],
+    "samples": [
+     "S18"
+    ]
+   },
+   "Finishing": {
+    "occurrences": 2,
+    "chargers": [
+     "23R2229E03A0850955"
+    ],
+    "samples": [
+     "S01"
+    ]
+   },
+   "Preparing": {
+    "occurrences": 13,
+    "chargers": [
+     "23R2130E0000851790",
+     "23R2142E0000852155NEW",
+     "23R2202E00C0850202",
+     "23R2220E00C0850700NEW",
+     "23R2229E03A0850955"
+    ],
+    "samples": [
+     "S01",
+     "S07",
+     "S12",
+     "S18",
+     "S20"
+    ]
+   },
+   "SuspendedEV": {
+    "occurrences": 2,
+    "chargers": [
+     "23R2202E00C0850202",
+     "23R2229E03A0850955"
+    ],
+    "samples": [
+     "S01",
+     "S07"
+    ]
+   }
+  },
+  "Exicom": {
+   "Available": {
+    "occurrences": 54,
+    "chargers": [
+     "D12010310600004"
+    ],
+    "samples": [
+     "S06",
+     "S09"
+    ]
+   },
+   "Charging": {
+    "occurrences": 12,
+    "chargers": [
+     "D12010310600004"
+    ],
+    "samples": [
+     "S06",
+     "S09"
+    ]
+   },
+   "Faulted": {
+    "occurrences": 10,
+    "chargers": [
+     "D12010310600004",
+     "D22110360720011"
+    ],
+    "samples": [
+     "S03",
+     "S09"
+    ]
+   },
+   "Finishing": {
+    "occurrences": 16,
+    "chargers": [
+     "D12010310600004",
+     "D22110360720011"
+    ],
+    "samples": [
+     "S03",
+     "S06",
+     "S09"
+    ]
+   },
+   "Preparing": {
+    "occurrences": 17,
+    "chargers": [
+     "D12010310600004"
+    ],
+    "samples": [
+     "S06",
+     "S09"
+    ]
+   }
+  },
+  "SIEMENS": {
+   "Available": {
+    "occurrences": 1,
+    "chargers": [
+     "SI07202689"
+    ],
+    "samples": [
+     "S08"
+    ]
+   },
+   "Charging": {
+    "occurrences": 1,
+    "chargers": [
+     "SI07202689"
+    ],
+    "samples": [
+     "S08"
+    ]
+   },
+   "Finishing": {
+    "occurrences": 1,
+    "chargers": [
+     "SI07202689"
+    ],
+    "samples": [
+     "S08"
+    ]
+   },
+   "Preparing": {
+    "occurrences": 1,
+    "chargers": [
+     "SI07202689"
+    ],
+    "samples": [
+     "S08"
+    ]
+   }
+  },
+  "mindra": {
+   "Available": {
+    "occurrences": 5,
+    "chargers": [
+     "MINE250100843",
+     "MINE2507004213"
+    ],
+    "samples": [
+     "S13",
+     "S16"
+    ]
+   },
+   "Charging": {
+    "occurrences": 5,
+    "chargers": [
+     "MINE2507004213"
+    ],
+    "samples": [
+     "S16"
+    ]
+   },
+   "Faulted": {
+    "occurrences": 4,
+    "chargers": [
+     "MINE2507004213"
+    ],
+    "samples": [
+     "S16"
+    ]
+   },
+   "Finishing": {
+    "occurrences": 4,
+    "chargers": [
+     "MINE2507004213"
+    ],
+    "samples": [
+     "S16"
+    ]
+   },
+   "Preparing": {
+    "occurrences": 4,
+    "chargers": [
+     "MINE2507004213"
+    ],
+    "samples": [
+     "S16"
+    ]
+   }
+  },
+  "null": {
+   "Available": {
+    "occurrences": 63,
+    "chargers": [
+     "D22110360720011",
+     "SI12202528",
+     "TPDC165692",
+     "TPDC20211019016NEW",
+     "TPDC20211160037",
+     "TPDC20211260270",
+     "TPDC20220260648",
+     "TPDC20220260866",
+     "TPDC20220661105",
+     "TPDC20220761225"
+    ],
+    "samples": [
+     "S02",
+     "S03",
+     "S04",
+     "S05",
+     "S10",
+     "S14",
+     "S15",
+     "S17",
+     "S19",
+     "S20"
+    ]
+   },
+   "Charging": {
+    "occurrences": 16,
+    "chargers": [
+     "SI12202528",
+     "TPDC20211019016NEW",
+     "TPDC20220260866"
+    ],
+    "samples": [
+     "S02",
+     "S04",
+     "S15"
+    ]
+   },
+   "Faulted": {
+    "occurrences": 20,
+    "chargers": [
+     "SI12202528",
+     "TPDC165692",
+     "TPDC20211019016NEW",
+     "TPDC20220260648"
+    ],
+    "samples": [
+     "S02",
+     "S10",
+     "S15",
+     "S19"
+    ]
+   },
+   "Finishing": {
+    "occurrences": 13,
+    "chargers": [
+     "SI12202528",
+     "TPDC20220260648",
+     "TPDC20220260866"
+    ],
+    "samples": [
+     "S02",
+     "S04",
+     "S10"
+    ]
+   },
+   "Preparing": {
+    "occurrences": 47,
+    "chargers": [
+     "D22110360720011",
+     "SI12202528",
+     "TPDC165692",
+     "TPDC20211019016NEW",
+     "TPDC20211160037",
+     "TPDC20211260270",
+     "TPDC20220260648",
+     "TPDC20220260681",
+     "TPDC20220260866",
+     "TPDC20220661105",
+     "TPDC20220761225"
+    ],
+    "samples": [
+     "S02",
+     "S03",
+     "S04",
+     "S05",
+     "S10",
+     "S11",
+     "S14",
+     "S15",
+     "S17",
+     "S19",
+     "S20"
+    ]
+   },
+   "SuspendedEVSE": {
+    "occurrences": 15,
+    "chargers": [
+     "TPDC165692",
+     "TPDC20211260270",
+     "TPDC20220260648",
+     "TPDC20220260681",
+     "TPDC20220661105",
+     "TPDC20220761225"
+    ],
+    "samples": [
+     "S05",
+     "S10",
+     "S11",
+     "S14",
+     "S17",
+     "S19"
+    ]
+   }
+  }
+ }
+}

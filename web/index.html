@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>TATA.ev Log Analyzer</title>
+  <meta name="description" content="Match charging logs to their reports and read the detailed source explanations."/>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="/static/reference-design.css"/>
+  <link rel="stylesheet" href="/static/app.css?v=details-tiles-3"/>
+  <script src="/static/config.js?v=amplify-1" defer></script>
+  <script src="/static/app.js?v=per-attempt-4" defer></script>
+</head>
+<body>
+<header class="main-header"><div class="header-inner">
+  <a class="brand" href="/">TATA<span>.ev</span></a>
+  <a class="dashboard-back" href="#"><span aria-hidden="true">←</span> Back to dashboard</a>
+</div></header>
+<main>
+<div class="analyzer-layout">
+<section class="input-panel" id="log-workspace" aria-label="Charger logs">
+<form class="input-card" id="analyze-form">
+  <div class="input-heading"><div><label for="logs">Charger logs</label><span class="input-format">(CSMS / OCPP)</span></div><div class="input-tools"><button id="clear-button" class="icon-button" type="button" title="Clear logs" aria-label="Clear logs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5m4-5v5"/></svg></button></div></div>
+  <div class="sample-bar"><label for="sample-picker">Select log sample</label><select id="sample-picker" class="sample-picker"><option value="">Paste your own log</option></select><span id="line-count">0 lines</span></div>
+  <div class="editor-body"><div class="log-editor"><div id="line-numbers" class="line-numbers" aria-hidden="true"></div><div class="log-source"><pre id="log-highlight" aria-hidden="true"></pre><textarea id="logs" aria-label="Charger original log entries" spellcheck="false" wrap="soft" placeholder="Paste your OCPP / CSMS charging logs here…"></textarea></div></div></div>
+  <div class="form-actions"><button type="submit" id="analyze-button" class="analyze-button" disabled><span class="play-icon" aria-hidden="true">▷</span>Analyze logs</button></div>
+</form>
+</section>
+<section class="output-panel" aria-label="Analysis results"><details class="analysis-card" id="results-card" open>
+  <summary class="analysis-header"><div class="analysis-heading"><span class="chart-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 20h18M5 17V9h3v8m3 0V5h3v12m3 0V2h3v15"/></svg></span><div><h2>Analysis Results</h2></div></div></summary>
+  <div class="result-scroll"><div id="error" class="error" role="alert" hidden></div><div id="results-placeholder" class="results-placeholder"><div class="placeholder-icon" aria-hidden="true">ϟ</div><span class="eyebrow">CHARGING SESSION DIAGNOSTICS</span><h2>Your charging session, explained.</h2><p>Paste your charging logs, then click Analyze logs.</p></div><section id="results" aria-live="polite" aria-busy="false" hidden></section></div>
+
+  <div id="feedback-actions" class="feedback-actions" aria-label="Rate this explanation" hidden>
+    <span class="feedback-prompt">Was this helpful?</span>
+    <button id="thumb-up" class="feedback-button rating-button" type="button" aria-label="Thumbs up: helpful explanation" aria-pressed="false"><span aria-hidden="true">👍</span> Helpful</button>
+    <button id="thumb-down" class="feedback-button rating-button" type="button" aria-label="Thumbs down: unhelpful explanation" aria-pressed="false"><span aria-hidden="true">👎</span> Not helpful</button>
+    <button id="feedback-button" class="feedback-button" type="button">Feedback</button>
+    <p id="rating-status" class="rating-status" role="status" aria-live="polite"></p>
+  </div>
+</details></section>
+</div>
+<details id="line-review" class="line-review" aria-labelledby="line-review-title" open hidden>
+  <summary class="line-review-heading"><h2 id="line-review-title">Detailed Log-by-Log Explanation</h2></summary>
+  <p class="entry-count" id="review-count"></p>
+  <ol id="line-list" class="line-list"></ol>
+  <div id="source-notes" class="source-notes"></div>
+</details>
+</main>
+<dialog id="feedback-dialog" class="feedback-dialog" aria-labelledby="feedback-title">
+  <div class="feedback-heading"><h2 id="feedback-title">Feedback on this explanation</h2><button id="feedback-close" class="dialog-close" type="button" aria-label="Close feedback">×</button></div>
+  <p>Tell us what was useful, what was wrong, or how the issue was resolved.</p>
+  <form id="feedback-form">
+    <label class="sr-only" for="feedback-resolution">Your feedback</label>
+    <textarea id="feedback-resolution" name="resolution" rows="6" maxlength="4000" required autofocus placeholder="What should we keep or improve? You can also describe the fix…"></textarea>
+    <p id="feedback-status" role="status" aria-live="polite" hidden></p>
+    <div class="feedback-form-actions"><button id="feedback-cancel" class="feedback-button" type="button">Cancel</button><button id="feedback-submit" class="analyze-button" type="submit">Save feedback</button></div>
+  </form>
+</dialog>
+</body></html>
