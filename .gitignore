@@ -1,0 +1,9 @@
+.env
+*.pem
+*.key
+*.db
+*.db-*
+*.sqlite*
+__pycache__/
+*.pyc
+.venv/
