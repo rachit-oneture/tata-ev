@@ -2,15 +2,10 @@
 
 Run:  python main.py
 """
-import base64
-import binascii
-import hmac
-import os
-
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, PlainTextResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
@@ -19,28 +14,6 @@ from app.routes import analyze, feedback, samples, sessions
 
 def create_app() -> FastAPI:
     api = FastAPI(title="Tata EV Diagnostics", docs_url=None, redoc_url=None, openapi_url=None)
-    password = os.environ.get("DEMO_PASSWORD", "")
-    if os.environ.get("RENDER") and not password:
-        raise RuntimeError("Set DEMO_PASSWORD before starting the public demo.")
-
-    @api.middleware("http")
-    async def protect_demo(request, call_next):
-        if not password or request.url.path == "/api/health":
-            return await call_next(request)
-        authorization = request.headers.get("authorization", "")
-        try:
-            scheme, token = authorization.split(" ", 1)
-            decoded = base64.b64decode(token, validate=True)
-            username, supplied = decoded.split(b":", 1)
-            valid = (scheme.lower() == "basic" and hmac.compare_digest(username, b"demo")
-                     and hmac.compare_digest(supplied, password.encode("utf-8")))
-        except (ValueError, binascii.Error):
-            valid = False
-        if not valid:
-            return PlainTextResponse("Authentication required", status_code=401,
-                                     headers={"WWW-Authenticate": 'Basic realm="Tata EV Demo"'})
-        return await call_next(request)
-
     if settings.cors_allowed_origins:
         api.add_middleware(
             CORSMiddleware,
