@@ -21,6 +21,7 @@ from ..config import ROOT
 from .glossary import NON_CODE_VALUES
 
 CATALOGUE_PATH = ROOT / "data" / "catalogue.json"
+OEM_CATALOGUE_PATH = ROOT / "data" / "oem_workbook_catalogue.json"
 
 
 def _norm(text: str) -> str:
@@ -30,6 +31,8 @@ def _norm(text: str) -> str:
 @lru_cache(maxsize=1)
 def _load(path: str = str(CATALOGUE_PATH)):
     records = json.loads(Path(path).read_text())
+    if Path(path) == CATALOGUE_PATH and OEM_CATALOGUE_PATH.exists():
+        records.extend(json.loads(OEM_CATALOGUE_PATH.read_text()))
     by_code = defaultdict(list)
     by_text = defaultdict(list)
     for record in records:
@@ -45,6 +48,11 @@ def _entry(record: dict) -> dict:
         "manufacturer": record.get("manufacturer"),
         "source": record.get("source"),
         "page": record.get("source_page"),
+        "model": record.get("model"),
+        "source_row": record.get("source_row"),
+        "field": record.get("field"),
+        "recommended_actions": record.get("recommended_actions", []),
+        "applicability_note": record.get("applicability_note"),
         "requires_confirmation": record.get("requires_confirmation", True),
     }
 
@@ -64,14 +72,22 @@ def lookup(value: str | None, vendor: str | None, *, field: str, companion_text:
     _, by_code, by_text = _load()
     result = {"value": value, "field": field, "vendor": vendor, "status": "not_found", "entries": [], "note": ""}
 
-    exact = by_code.get(value, [])
+    def applicable(record):
+        kind = record.get("field")
+        if kind == "stop_reason":
+            return field == "stop_reason"
+        if kind == "ocpp_error":
+            return field == "ocpp_error"
+        return field not in ("stop_reason", "ocpp_error")
+
+    exact = [r for r in by_code.get(value, []) if applicable(r)]
     if exact:
         mine = [r for r in exact if _same_vendor(r.get("manufacturer"), vendor)]
         unscoped = [r for r in exact if not r.get("manufacturer")]
         other = [r for r in exact if r.get("manufacturer") and not _same_vendor(r.get("manufacturer"), vendor)]
         if mine:
             result["status"], chosen = "documented", mine
-            result["note"] = "The OCPP vendorId matches this table's manufacturer text. Physical make, model and firmware are not confirmed."
+            result["note"] = "The reported vendor matches the table. Confirm the charger model and firmware before applying its definition or actions."
         elif vendor is None and other:
             result["status"], chosen = "vendor_unknown", other
             result["note"] = (f"The log does not contain a vendorId. {other[0]['manufacturer']} lists this code, "
@@ -89,7 +105,7 @@ def lookup(value: str | None, vendor: str | None, *, field: str, companion_text:
             result["note"] += " The log's own text matches this description."
         return result
 
-    phrase = by_text.get(_norm(value), [])
+    phrase = [r for r in by_text.get(_norm(value), []) if applicable(r)]
     if phrase:
         result["status"] = "phrase_match"
         result["entries"] = [_entry(r) for r in phrase]

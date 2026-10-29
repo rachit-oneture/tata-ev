@@ -273,13 +273,16 @@ function render(data) {
       .filter(s => ["ocpp_error", "vendor_code", "code_in_info", "vendor_message"].includes(s.kind) && s.value && s.value !== "NoError");
     const codes = unique(signals.map(s => s.value));
     const descriptions = unique(signals.flatMap(s => {
-      if (s.lookup?.status === "documented") return (s.lookup.entries || []).map(entry => `${s.value}: ${entry.description}`);
+      if (s.lookup?.status === "documented") return (s.lookup.entries || []).map(entry => `${s.value}${entry.model ? ` (${entry.model}; model to confirm)` : ""}: ${entry.description}`);
+      if (s.lookup?.status === "vendor_unknown") return (s.lookup.entries || []).map(entry => `Possible ${entry.manufacturer}${entry.model ? ` ${entry.model}` : ""} definition for ${s.value} (vendor and model unconfirmed): ${entry.description}`);
       return s.meaning ? [`${s.value}: ${s.meaning}`] : [];
     }));
     const reading = attempt?.evidence_reading || (attempts.length <= 1 ? assessment.evidence_reading : null);
     const cause = reading?.reason || attempt?.assessment?.cause_assessment?.note || "The physical root cause is not established from the available evidence.";
     const checks = Array.isArray(reading?.needs_confirmation) ? reading.needs_confirmation.filter(x => typeof x === "string" && x.trim()) : [];
-    const action = checks.length ? checks.join("; ") : "Confirm the applicable manufacturer code definition and collect additional charger and vehicle diagnostics.";
+    const workbookActions = unique(signals.flatMap(s => s.lookup?.status === "documented"
+      ? (s.lookup.entries || []).flatMap(entry => (entry.recommended_actions || []).map(action => `${entry.model ? `For ${entry.model} (confirm model): ` : "Confirm applicable charger model: "}${action}`)) : []));
+    const action = [...workbookActions, ...checks].join("; ") || "Confirm the applicable manufacturer code definition and collect additional charger and vehicle diagnostics.";
     const fields = [
       ["Error Code", codes.join(", ") || "No error code reported"],
       ["Error Description", descriptions.join("; ") || attempt?.summary?.error || assessment.immediate_reason || "No confirmed error description is available."],

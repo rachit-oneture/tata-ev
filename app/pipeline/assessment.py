@@ -266,7 +266,8 @@ def documented_faults(att: Attempt, vendor: str | None, window: str, negative: l
     if vendor is None:
         return {**empty, "note": "The log does not name the manufacturer, so vendor-scoped documented faults cannot be listed."}
     records, _, _ = _load()
-    mine = [r for r in records if r.get("manufacturer") and _same_vendor(r["manufacturer"], vendor)]
+    mine = [r for r in records if r.get("manufacturer") and _same_vendor(r["manufacturer"], vendor)
+            and r.get("field") not in ("stop_reason", "ocpp_error")]
     if not mine:
         return {**empty, "note": f"The supplied code tables contain no entries for {vendor}."}
 

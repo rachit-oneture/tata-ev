@@ -207,7 +207,8 @@ def signals_of(event: Event, vendor: str | None) -> list[dict]:
         ec, vc, info, status = (event.get(n) for n in ("error_code", "vendor_error_code", "info", "status"))
         vendor = event.get("vendor_id") if event.get("vendor_id") not in NON_CODE_VALUES else vendor
         if ec not in NON_CODE_VALUES:
-            add("ocpp_error", ec, meaning=OCPP_ERROR_CODES.get(ec), meaning_source=SOURCE if ec in OCPP_ERROR_CODES else None)
+            add("ocpp_error", ec, meaning=OCPP_ERROR_CODES.get(ec), meaning_source=SOURCE if ec in OCPP_ERROR_CODES else None,
+                lookup=lookup(ec, vendor, field="ocpp_error"))
         if vc not in NON_CODE_VALUES and vc is not None:
             found = lookup(vc, vendor, field="vendorErrorCode", companion_text=info)
             if found:
@@ -220,7 +221,8 @@ def signals_of(event: Event, vendor: str | None) -> list[dict]:
     elif event.action in ("StopTransaction", "TransactionStopped"):
         reason = event.get("reason")
         if reason and reason not in NORMAL_STOP_REASONS:
-            add("stop_reason", reason, meaning=STOP_REASONS.get(reason), meaning_source=SOURCE if reason in STOP_REASONS else None)
+            add("stop_reason", reason, meaning=STOP_REASONS.get(reason), meaning_source=SOURCE if reason in STOP_REASONS else None,
+                lookup=lookup(reason, vendor, field="stop_reason"))
     elif event.direction == "response" or event.action in ("Authorization", "StartTransaction", "RemoteStartTransaction"):
         word = _result_word(event)
         if word in REJECT_WORDS:
@@ -463,8 +465,13 @@ def _summary(att, primary, signals, stop, stop_reason, duration, delta, reached,
 def signal_text(sig: dict) -> str:
     kind, value = sig["kind"], sig["value"]
     if kind in ("vendor_code", "code_in_info"):
-        entries = (sig.get("lookup") or {}).get("entries") or []
-        return f"error code {value}" + (f" (\"{entries[0]['description']}\")" if entries else " (no definition in the supplied tables)")
+        lookup_result = sig.get("lookup") or {}
+        entries = lookup_result.get("entries") or []
+        if entries and lookup_result.get("status") == "documented":
+            return f"error code {value} (table definition, model to confirm: \"{entries[0]['description']}\")"
+        if entries:
+            return f"error code {value} (table match is not confirmed for this charger)"
+        return f"error code {value} (no definition in the supplied tables)"
     if kind == "ocpp_error":
         return f"standard error {value}" + (f" ({sig['meaning']})" if sig.get("meaning") else "")
     if kind == "stop_reason":
