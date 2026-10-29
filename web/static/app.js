@@ -273,7 +273,7 @@ function render(data) {
       .filter(s => ["ocpp_error", "vendor_code", "code_in_info", "vendor_message"].includes(s.kind) && s.value && s.value !== "NoError");
     const codes = unique(signals.map(s => s.value));
     const descriptions = unique(signals.flatMap(s => {
-      if (s.lookup?.status === "documented") return (s.lookup.entries || []).map(entry => `${s.value}${entry.model ? ` (${entry.model}; model to confirm)` : ""}: ${entry.description}`);
+      if (s.lookup?.status === "documented") return (s.lookup.entries || []).map(entry => `${s.value}${s.lookup.match_type === "configured_mapping" ? ` (using Exicom code ${s.lookup.mapped_code}; suffix meaning unconfirmed)` : ""}${entry.model ? ` (${entry.model}; model to confirm)` : ""}: ${entry.description}`);
       if (s.lookup?.status === "vendor_unknown") return (s.lookup.entries || []).map(entry => `Possible ${entry.manufacturer}${entry.model ? ` ${entry.model}` : ""} definition for ${s.value} (vendor and model unconfirmed): ${entry.description}`);
       return s.meaning ? [`${s.value}: ${s.meaning}`] : [];
     }));
