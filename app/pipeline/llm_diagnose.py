@@ -121,7 +121,10 @@ def retrieve_error_store(attempt: dict) -> list[dict]:
 
     for signal in attempt.get("signals", []):
         for entry in (signal.get("lookup") or {}).get("entries", []):
-            add(entry.get("code"), entry, "exact charger-reported value", (signal.get("lookup") or {}).get("status"))
+            lookup = signal.get("lookup") or {}
+            retrieval = (f"configured mapping from reported {signal['value']}; suffix meaning is unconfirmed"
+                         if lookup.get("match_type") == "configured_mapping" else "exact charger-reported value")
+            add(entry.get("code"), entry, retrieval, lookup.get("status"))
     for family in attempt["assessment"]["documented_faults_to_check"].get("families", []):
         for entry in family.get("entries", []):
             add(entry["code"], entry, "rules-engine stage candidate; not reported by the charger")
