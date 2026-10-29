@@ -1,8 +1,8 @@
 """Look up a reported code in the supplied code tables.
 
 Rules (the LLM never decides these):
-  * Exact, case-sensitive match on the code. No prefix, fuzzy or numeric matching:
-    10C316 is NOT 00C316.
+  * Exact, case-sensitive match on the code, except explicitly configured mappings.
+    No general prefix, fuzzy or numeric matching: 10C316 is NOT 00C316.
   * An exact OCPP vendorId / table-manufacturer text match narrows the table, but does
     not prove this charger's physical manufacturer, model or firmware. A table with no
     manufacturer is reported as "unscoped": it might not describe this charger.
@@ -22,6 +22,8 @@ from .glossary import NON_CODE_VALUES
 
 CATALOGUE_PATH = ROOT / "data" / "catalogue.json"
 OEM_CATALOGUE_PATH = ROOT / "data" / "oem_workbook_catalogue.json"
+# Explicitly approved by the user for this Exicom value; not a general prefix rule.
+CODE_MAPPINGS = {("exicom", "308-3-3"): "308"}
 
 
 def _norm(text: str) -> str:
@@ -80,7 +82,9 @@ def lookup(value: str | None, vendor: str | None, *, field: str, companion_text:
             return field == "ocpp_error"
         return field not in ("stop_reason", "ocpp_error")
 
-    exact = [r for r in by_code.get(value, []) if applicable(r)]
+    mapped_code = CODE_MAPPINGS.get((_norm(vendor or ''), value)) if field == 'vendorErrorCode' else None
+    lookup_code = mapped_code or value
+    exact = [r for r in by_code.get(lookup_code, []) if applicable(r)]
     if exact:
         mine = [r for r in exact if _same_vendor(r.get("manufacturer"), vendor)]
         unscoped = [r for r in exact if not r.get("manufacturer")]
@@ -101,6 +105,11 @@ def lookup(value: str | None, vendor: str | None, *, field: str, companion_text:
             result["note"] = (f"Only {other[0]['manufacturer']}'s table lists this code, while the log's vendorId is "
                               f"{vendor}. It probably does not apply.")
         result["entries"] = [_entry(r) for r in chosen]
+        if mapped_code and mine:
+            result["match_type"] = "configured_mapping"
+            result["mapped_code"] = mapped_code
+            result["note"] = (f"Reported {value} is configured to use Exicom code {mapped_code}. "
+                              "The suffix meaning and charger model are not confirmed.")
         if companion_text and any(_norm(companion_text) == _norm(r["description"]) for r in chosen):
             result["note"] += " The log's own text matches this description."
         return result
