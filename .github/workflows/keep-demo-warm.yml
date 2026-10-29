@@ -1,0 +1,27 @@
+name: Keep demo warm for five days
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  keep-warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping demo until expiry, then disable this workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          if [ "$(date -u +%s)" -ge "$(date -u -d '2026-11-03T05:33:24Z' +%s)" ]; then
+            echo "Five-day demo window has ended. Disabling this workflow."
+            gh api --method PUT "repos/$REPOSITORY/actions/workflows/keep-demo-warm.yml/disable" || echo "Could not disable workflow; future runs will not ping."
+            exit 0
+          fi
+          curl --fail --silent --show-error --location --max-time 90 --retry 2 https://tata-ev-demo.onrender.com/api/health
